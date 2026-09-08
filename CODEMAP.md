@@ -53,7 +53,7 @@ Instrument TypeScript owner
 
 ## Key Patterns
 
-- **Domain Model**: Six caregiver load domains GC1-GC6, weighted 0.1-0.2, scored 0-100.
+- **Domain Model**: Six caregiver domains GC1-GC6, weighted 0.1-0.2, scored 0-100.
 - **Deficit Framing**: Higher raw value = worse outcome, inverted during normalization.
 - **Instrument Routing**: `mapInstrumentToDomains()` dispatches structural instruments by canonical machine ID.
 - **Progressive Assessment**: GC-SDOH-6 establishes the structural baseline; GC-SDOH-30 optionally asks four more questions in one flagged domain; EMA-3 retains a native reading and updates the current composite after baseline.
