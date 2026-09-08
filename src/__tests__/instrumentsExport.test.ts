@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, it, expect } from 'vitest'
-import { buildInstrumentExport } from '../assessments/instrumentExport'
+import { buildInstrumentExport } from '../assessments/instrumentExport.js'
 
 // The committed snapshot `data/instruments-export.json` is the canonical shared
 // instrument artifact. Consumers sync its verified ArtifactRef. Hound

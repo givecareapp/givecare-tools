@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { isQuietHoursNow, nextAllowedSendAt } from '../sms/quietHours'
+import { isQuietHoursNow, nextAllowedSendAt } from '../sms/quietHours.js'
 
 // Helper: create a timestamp for a specific hour in a given timezone.
 // We use Intl to confirm the local hour matches what we expect.

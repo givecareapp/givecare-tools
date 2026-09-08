@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { days } from '../lib/time'
+import { days } from '../lib/time.js'
 
 describe('days', () => {
   it('returns milliseconds for 1 day', () => {

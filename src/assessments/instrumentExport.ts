@@ -1,5 +1,5 @@
-import { getInstrument, SDOH30_QUESTIONS } from './instruments'
-import { GC_DOMAIN_LABELS, GC_DOMAIN_WEIGHTS, SDOH6_DOMAIN_MAP, type GCDomainCode } from '../scoring/givecareScore'
+import { getInstrument, SDOH30_QUESTIONS } from './instruments.js'
+import { GC_DOMAIN_LABELS, GC_DOMAIN_WEIGHTS, SDOH6_DOMAIN_MAP, type GCDomainCode } from '../scoring/givecareScore.js'
 
 /**
  * The shared, machine-readable projection of the public SDOH instruments.

@@ -17,7 +17,7 @@ import {
   GC_DOMAINS,
   GC_DOMAIN_LABELS,
   GC_DOMAIN_WEIGHTS,
-} from '../scoring/givecareScore'
+} from '../scoring/givecareScore.js'
 
 // ---------------------------------------------------------------------------
 // toBand
@@ -289,7 +289,6 @@ describe('computeGiveCareScore', () => {
     const result = computeGiveCareScore(domains, ['gc_sdoh6'])
     expect(result.score).toBe(80)
     expect(result.band).toBe('strong')
-    expect(result.bandLabel).toBe('Standing strong')
     expect(result.confidence).toBe('early_estimate')
   })
 

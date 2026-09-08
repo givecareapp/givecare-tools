@@ -275,7 +275,7 @@ export const SDOH30_QUESTIONS: readonly Sdoh30Question[] = freezeItems([
     gcDomain: 'GC4',
   },
 
-  // GC5: Legal & Navigation
+  // GC5: Navigation
   {
     id: 'GC5-1',
     prompt: 'How hard is it to understand or navigate care system options?',
@@ -407,7 +407,7 @@ export function scoreInstrument(
   }
 }
 
-/** Get the four additional GC-SDOH-30 questions for selected caregiver load domains. */
+/** Get the four additional GC-SDOH-30 questions for selected caregiver domains. */
 export function getSdoh30QuestionsForDomains(domains: readonly GCDomainCode[]): Sdoh30Question[] {
   const domainSet = new Set(domains)
   return SDOH30_QUESTIONS.filter(

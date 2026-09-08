@@ -3,7 +3,7 @@ import {
   parseRegulatoryCommand,
   regulatoryResponse,
   isShareKeyword,
-} from '../sms/regulatory'
+} from '../sms/regulatory.js'
 
 // ---------------------------------------------------------------------------
 // parseRegulatoryCommand

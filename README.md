@@ -29,7 +29,7 @@ Not included: production benefits data, eligibility filing flows, Mira prompt/ru
 | **EMA-3** | 3 | Momentary reading (stress/mood/coping) | ~1 min |
 | **GC-SDOH-30** | 30-item bank | Four additional questions in one flagged domain | ~1-2 min |
 
-All use a 0-4 response scale. SDOH items are deficit-framed; EMA mood and coping are positively framed. The six caregiver load domains are Social Support (GC1), Physical Health (GC2), Housing & Environment (GC3), Financial Resources (GC4), Navigation (GC5), and Emotional Wellbeing (GC6).
+All use a 0-4 response scale. SDOH items are deficit-framed; EMA mood and coping are positively framed. The six caregiver domains are Social Support (GC1), Physical Health (GC2), Housing & Environment (GC3), Financial Resources (GC4), Navigation (GC5), and Emotional Wellbeing (GC6).
 
 **Documentation:** See [GC-SDOH.md](./GC-SDOH.md) for complete questions, scoring, and implementation details.
 
@@ -53,7 +53,7 @@ bind that reference. They never invoke the builder or write the projection.
 
 ## Scoring model
 
-The GiveCare Score is a GC1-GC6 weighted composite. GC-SDOH-6 supplies the structural baseline, a completed targeted GC-SDOH-30 branch refines its matching domain, and EMA-3 updates the current health and emotional-wellbeing domains after that baseline exists. EMA-3 also retains its native reading. Higher values mean lower caregiver pressure.
+The GiveCare Score is a GC1-GC6 weighted composite. GC-SDOH-6 supplies the structural baseline, a completed targeted GC-SDOH-30 branch refines its matching domain, and EMA-3 updates the current health and emotional-wellbeing domains after that baseline exists. EMA-3 also retains its native reading. Higher values mean more capacity.
 
 ## Install
 
@@ -87,7 +87,7 @@ const sdoh6 = scoreInstrument('gc_sdoh6', 'v2', {
   burnout: 3,
 })
 
-// Compute composite GiveCare Score (0-100; higher = lower pressure)
+// Compute composite GiveCare Score (0-100; higher means more capacity)
 const composite = computeGiveCareScoreFromInstruments([
   { instrument: 'gc_sdoh6', subscores: sdoh6.subscores },
 ])

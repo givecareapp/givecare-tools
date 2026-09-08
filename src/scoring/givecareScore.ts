@@ -1,5 +1,5 @@
-import type { InstrumentName, GCDomainCode } from '../assessments/instruments'
-import { days } from '../lib/time'
+import type { InstrumentName, GCDomainCode } from '../assessments/instruments.js'
+import { days } from '../lib/time.js'
 
 export type { GCDomainCode }
 
@@ -39,13 +39,10 @@ export const SDOH6_DOMAIN_MAP: Record<string, GCDomainCode> = {
 
 export type Band = 'strong' | 'steady' | 'building' | 'needs_attention'
 
-export const BAND_LABELS: Record<Band, string> = {
-  strong: 'Standing strong',
-  steady: 'Holding steady',
-  building: 'Pushing through',
-  needs_attention: 'Carrying a lot',
-}
-
+/**
+ * Operator and research grouping only. Not a validated cutoff. Never shown
+ * to caregivers.
+ */
 export function toBand(score: number): Band {
   if (score >= 75) return 'strong'
   if (score >= 50) return 'steady'
@@ -179,7 +176,6 @@ export function flaggedDomains(domainScores: DomainScores): GCDomainCode[] {
 export interface GiveCareScoreResult {
   score: number
   band: Band
-  bandLabel: string
   confidence: ConfidenceLevel
   instruments: string[]
   domains: DomainScores
@@ -226,7 +222,6 @@ export function computeGiveCareScore(
   return {
     score,
     band,
-    bandLabel: BAND_LABELS[band],
     confidence,
     instruments,
     domains,
@@ -281,7 +276,6 @@ export function computeGiveCareScoreFromInstruments(
 export interface EmaReadingResult {
   score: number
   band: Band
-  bandLabel: string
 }
 
 /** Native EMA-3 reading, retained alongside any baseline-anchored composite. */
@@ -293,7 +287,7 @@ export function computeEmaReading(answers: Record<string, number>): EmaReadingRe
   ].filter((value): value is number => value !== undefined)
   const score = values.length === 0 ? 0 : Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 100)
   const band = toBand(score)
-  return { score, band, bandLabel: BAND_LABELS[band] }
+  return { score, band }
 }
 
 export type TrendDirection = 'improving' | 'stable' | 'declining'

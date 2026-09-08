@@ -7,7 +7,7 @@ import {
   getSdoh30NextChunk,
   SDOH30_QUESTIONS,
   SDOH30_ITEM_IDS,
-} from '../assessments/instruments'
+} from '../assessments/instruments.js'
 
 // ---------------------------------------------------------------------------
 // getInstrument

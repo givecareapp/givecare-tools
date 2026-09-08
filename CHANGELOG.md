@@ -12,6 +12,14 @@ All notable changes to `@givecare/tools` are documented here. The format follows
   definition** (ids, question prompts, domains, scale, and composite scoring
   semantics). Downstream copies gate against this repo instead of being
   hand-synced. Root `VISION.md` ownership table updated to match.
+- Removed caregiver band labels (`BAND_LABELS`, `bandLabel`) from the scoring
+  API. Bands (`Band`, `toBand`) remain as operator and research groupings,
+  documented as unvalidated and never shown to caregivers.
+- Standardized the GiveCare Score direction gloss to "higher means more
+  capacity" across code comments, README, and `GC-SDOH.md`.
+- Aligned the GC5 domain comment in `src/assessments/instruments.ts` to
+  "Navigation".
+- `dist` now loads under Node ESM: relative imports carry `.js` extensions.
 
 ### Added
 
@@ -23,6 +31,7 @@ All notable changes to `@givecare/tools` are documented here. The format follows
   packaging overlay.
 - `src/assessments/instrumentExport.ts` — `buildInstrumentExport()`, the single
   builder behind the snapshot.
+- `prepare` script (`tsc`) so a git-hosted install builds `dist` automatically.
 
 ## [3.0.0]
 

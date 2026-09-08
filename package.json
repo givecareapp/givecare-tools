@@ -71,6 +71,7 @@
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc",
+    "prepare": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",

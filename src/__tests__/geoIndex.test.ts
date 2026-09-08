@@ -4,7 +4,7 @@ import {
   parseTimezoneResponse,
   TZ_DISPLAY_NAME,
   zipToState,
-} from '../geo'
+} from '../geo/index.js'
 
 describe('geo barrel', () => {
   it('exports timezone and ZIP/state helpers from the aggregate geo module', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { zipToState } from '../geo/zipToState'
+import { zipToState } from '../geo/zipToState.js'
 
 describe('zipToState', () => {
   it('maps New York City ZIP to NY', () => {

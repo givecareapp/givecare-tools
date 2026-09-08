@@ -1,2 +1,2 @@
-export * from './regulatory'
-export * from './quietHours'
+export * from './regulatory.js'
+export * from './quietHours.js'

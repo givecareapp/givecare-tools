@@ -157,7 +157,7 @@ All instruments use `scoreInstrument()` which sums raw answers and classifies by
 | High | 50-74% of max |
 | Critical | >= 75% of max |
 
-### Composite GiveCare Score (0-100, higher = better)
+### Composite GiveCare Score (0-100, higher means more capacity)
 
 GC-SDOH-6 supplies one normalized score per domain. A completed GC-SDOH-30 branch
 refines only its matching domain. After that structural baseline exists, EMA-3
@@ -175,12 +175,15 @@ updates GC2 from stress and GC6 from mood and coping while retaining its native
 
 ### Bands
 
-| Band | Score Range | Label |
-|------|-----------|-------|
-| Strong | 75-100 | Standing strong |
-| Steady | 50-74 | Holding steady |
-| Building | 25-49 | Pushing through |
-| Needs Attention | 0-24 | Carrying a lot |
+| Band | Score Range |
+|------|-----------|
+| Strong | 75-100 |
+| Steady | 50-74 |
+| Building | 25-49 |
+| Needs Attention | 0-24 |
+
+Bands are operator and research groupings. They are not validated cutoffs and
+are not shown to caregivers.
 
 ### Confidence
 

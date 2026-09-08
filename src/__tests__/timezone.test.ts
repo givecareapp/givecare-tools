@@ -3,7 +3,7 @@ import {
   inferTimezoneFromAreaCode,
   parseTimezoneResponse,
   TZ_DISPLAY_NAME,
-} from '../geo/timezone'
+} from '../geo/timezone.js'
 
 // ---------------------------------------------------------------------------
 // inferTimezoneFromAreaCode
