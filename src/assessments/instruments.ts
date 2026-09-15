@@ -21,6 +21,13 @@ export interface AssessmentScore {
   score: number
   maxScore: number
   subscores: Record<string, number>
+  /**
+   * Routing grouping for the raw deficit total, from `toRiskBand`. Not a
+   * validated cutoff, not a clinical risk stratification, and never shown to
+   * caregivers. GC-SDOH instruments record self-reported caregiver needs; they
+   * are not validated burden or well-being instruments, so no band here carries
+   * an instrument-level claim.
+   */
   riskBand: 'low' | 'moderate' | 'high' | 'critical'
 }
 
@@ -433,6 +440,13 @@ export function getSdoh30NextChunk(completedItemIds: readonly string[], chunkSiz
   return SDOH30_ITEM_IDS.filter(id => !completed.has(id)).slice(0, chunkSize)
 }
 
+/**
+ * Group the raw deficit total by proportion of the instrument maximum:
+ * <25% low, <50% moderate, <75% high, otherwise critical. Structural
+ * quartiles for routing, not validated cutoffs. Distinct from the composite
+ * `toBand` in ../scoring/givecareScore.ts, which groups the 0-100 GiveCare
+ * Score on the opposite polarity.
+ */
 function toRiskBand(score: number, maxScore: number): 'low' | 'moderate' | 'high' | 'critical' {
   const ratio = maxScore > 0 ? score / maxScore : 0
   if (ratio < 0.25) return 'low'
