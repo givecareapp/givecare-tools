@@ -14,7 +14,7 @@ function serialize(): string {
 }
 
 describe('instruments export snapshot', () => {
-  it('data/instruments-export.json matches source (run Hound corpus.project if this fails)', () => {
+  it('data/instruments-export.json matches source (run Helm Evidence corpus.project if this fails)', () => {
     expect(readFileSync(SNAPSHOT_PATH, 'utf8')).toBe(serialize())
   })
 
