@@ -185,6 +185,19 @@ updates GC2 from stress and GC6 from mood and coping while retaining its native
 Bands are operator and research groupings. They are not validated cutoffs and
 are not shown to caregivers.
 
+### Instrument Risk Bands
+
+`scoreInstrument()` also returns a per-instrument `riskBand`, grouping the raw
+deficit total by proportion of that instrument's maximum: low below 25%,
+moderate below 50%, high below 75%, critical at or above 75%. It runs on the
+raw deficit total, so its polarity is the opposite of the composite bands above.
+
+These groupings are intended for operator routing of follow-up. They are not
+validated cutoffs and not a validated clinical interpretation. GC-SDOH
+instruments record self-reported caregiver needs across the six domains; they
+are not validated caregiver burden or well-being instruments, and no band
+converts them into one.
+
 ### Confidence
 
 | Instruments Completed | Level |
