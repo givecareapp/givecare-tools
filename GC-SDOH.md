@@ -148,7 +148,14 @@ All questions are deficit-framed on a 0-4 scale (higher = greater need).
 
 ### Per-Instrument Scoring
 
-All instruments use `scoreInstrument()` which sums raw answers and classifies by ratio:
+All instruments use `scoreInstrument()`, which requires a finite answer for
+every question in the instrument. It throws, naming the missing question ids,
+rather than score a partial answer set — a missing answer is not a 0, and
+scoring it as one would understate deficit and misroute risk. Progressive
+GC-SDOH-30 administration does not call `scoreInstrument()`; it aggregates
+answered items per domain through `mapSdoh30ToDomains()` instead. On a
+complete answer set, `scoreInstrument()` sums raw answers and classifies by
+ratio:
 
 | Risk Band | Score Ratio |
 |-----------|------------|

@@ -28,7 +28,7 @@
       ],
       "verifiers": [
         "npm run ci",
-        "helm evidence driver check --driver evidence-driver.json"
+        "hound driver check --driver evidence-driver.json"
       ],
       "capabilities": [
         {

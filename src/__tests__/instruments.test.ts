@@ -142,13 +142,23 @@ describe('scoreInstrument — SDOH-6', () => {
     expect(result.score).toBe(0 + 4 + 2 + 2 + 2 + 2)
   })
 
-  it('treats missing answers as 0', () => {
-    const result = scoreInstrument('gc_sdoh6', 'v2', {})
-    expect(result.score).toBe(0)
-    expect(result.riskBand).toBe('low')
+  it('throws on a missing answer set, naming every missing question id', () => {
+    expect(() => scoreInstrument('gc_sdoh6', 'v2', {})).toThrow(
+      /financial, social, health, housing, navigation, burnout/
+    )
   })
 
-  it('treats NaN / undefined answer values as 0', () => {
+  it('throws naming only the specific missing question ids', () => {
+    const answers = {
+      financial: 2, social: 1, health: 0,
+      housing: 3, navigation: 1,
+      // burnout omitted
+    }
+    expect(() => scoreInstrument('gc_sdoh6', 'v2', answers)).toThrow(/burnout/)
+    expect(() => scoreInstrument('gc_sdoh6', 'v2', answers)).not.toThrow(/financial/)
+  })
+
+  it('throws on NaN or undefined answer values, not just missing keys', () => {
     const answers = {
       financial: NaN,
       social: undefined as unknown as number,
@@ -157,9 +167,19 @@ describe('scoreInstrument — SDOH-6', () => {
       navigation: 4,
       burnout: 4,
     }
+    expect(() => scoreInstrument('gc_sdoh6', 'v2', answers)).toThrow(/financial, social/)
+  })
+
+  it('scores a complete answer set the same as before the fail-closed check', () => {
+    const answers = {
+      financial: 3, social: 1, health: 2,
+      housing: 0, navigation: 4, burnout: 2,
+    }
     const result = scoreInstrument('gc_sdoh6', 'v2', answers)
-    // financial=0, social=0, rest=4 each → 16
-    expect(result.score).toBe(16)
+    expect(result.score).toBe(12)
+    expect(result.maxScore).toBe(24)
+    expect(result.subscores.financial).toBe(3)
+    expect(result.riskBand).toBe('high')
   })
 })
 
