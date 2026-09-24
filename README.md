@@ -33,23 +33,20 @@ All use a 0-4 response scale. SDOH items are deficit-framed; EMA mood and coping
 
 **Documentation:** See [GC-SDOH.md](./GC-SDOH.md) for complete questions, scoring, and implementation details.
 
-This repo is the **canonical owner of the public SDOH instrument definition** — the instrument ids, question prompts, domains, and scale. Helm Evidence `corpus.project` is the only supported writer for [`data/instruments-export.json`](./data/instruments-export.json). Every downstream copy syncs the exact artifact from a verified Helm Evidence run and binds its `givecare.artifact-ref/v1`.
+This repo is the **canonical owner of the public SDOH instrument definition** — the instrument ids, question prompts, domains, and scale. `scripts/project-instruments.ts` is the only supported writer for [`data/instruments-export.json`](./data/instruments-export.json). Every downstream copy syncs the exact committed artifact and binds its `givecare.artifact-ref/v1`.
 
 Project a source change:
 
 ```bash
-hound driver check --driver evidence-driver.json
-hound plan --driver evidence-driver.json --operation corpus.project \
-  --json '{"schema_version":"gc-tools.hound.project.input.v1"}' \
-  --as-of YYYY-MM-DD --output /tmp/gc-tools-project.json
-hound execute --driver evidence-driver.json --plan /tmp/gc-tools-project.json
-# Run `hound verify <run_dir>` with the run directory from execute.
+npm run project:instruments
 ```
 
-Helm Evidence binds the source repository, exact output bytes, final file mode, and
-artifact SHA-256 before it writes. The result emits a public
-`givecare.artifact-ref/v1` owned by `tools.assessments`. Downstream consumers
-bind that reference. They never invoke the builder or write the projection.
+The script builds the export from `src/assessments/instrumentExport.ts`,
+writes it atomically, and prints the final SHA-256. Inspect the diff, then
+commit the projection on `main`. Downstream consumers request that exact
+commit through the workspace `projection-ref` command (capability
+`methods.assessment.project`) and verify the committed bytes. They never
+invoke the builder or write the projection themselves.
 
 ## Scoring model
 
@@ -123,10 +120,9 @@ src/
   geo/zipToState.ts              # ZIP → US state lookup
   lib/time.ts                    # days() helper
 data/
-  instruments-export.json        # Canonical Helm Evidence-projected instrument snapshot
+  instruments-export.json        # Canonical projected instrument snapshot
 scripts/
-  evidence-driver.ts              # Helm Evidence protocol adapter for corpus.project
-evidence-driver.json              # Helm Evidence capability and write scope
+  project-instruments.ts          # Regenerates data/instruments-export.json
 ```
 
 ## Use cases

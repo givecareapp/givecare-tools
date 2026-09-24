@@ -20,15 +20,10 @@
         {
           "kind": "projection",
           "ref": "data/instruments-export.json"
-        },
-        {
-          "kind": "projection-kernel",
-          "ref": "evidence-driver.json#corpus.project"
         }
       ],
       "verifiers": [
-        "npm run ci",
-        "hound driver check --driver evidence-driver.json"
+        "npm run ci"
       ],
       "capabilities": [
         {
@@ -68,15 +63,11 @@
           "effect": "write",
           "gate": "none",
           "adapter": {
-            "kind": "evidence-operation",
-            "ref": "evidence-driver.json#corpus.project"
+            "kind": "script",
+            "ref": "scripts/project-instruments.ts"
           },
-          "accepts": [
-            "gc-tools.hound.project.input.v1"
-          ],
+          "accepts": [],
           "emits": [
-            "gc-tools.hound.project-plan.v1",
-            "gc-tools.hound.project-result.v1",
             "givecare.artifact-ref/v1",
             "@givecare/tools.InstrumentExport"
           ]

@@ -23,12 +23,13 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 
 ### Added
 
-- Hound `corpus.project` is the only supported writer for the canonical shared
-  instrument snapshot at `data/instruments-export.json`. It binds exact bytes,
-  mode, and SHA-256 in its plan and verified run. It emits a public
-  `givecare.artifact-ref/v1` for consumers. The public sibling
-  `../gc-evals` syncs the exact verified artifact before adding its local
-  packaging overlay.
+- `scripts/project-instruments.ts` is the only supported writer for the
+  canonical shared instrument snapshot at `data/instruments-export.json`. It
+  writes exact bytes and mode atomically and prints the resulting SHA-256.
+  Downstream consumers bind a public `givecare.artifact-ref/v1` for the
+  committed result through the workspace `projection-ref` command. The
+  public sibling `../gc-evals` syncs the exact verified artifact before
+  adding its local packaging overlay.
 - `src/assessments/instrumentExport.ts` — `buildInstrumentExport()`, the single
   builder behind the snapshot.
 - `prepare` script (`tsc`) so a git-hosted install builds `dist` automatically.
