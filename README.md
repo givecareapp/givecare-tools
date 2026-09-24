@@ -35,15 +35,15 @@ All use a 0-4 response scale. SDOH items are deficit-framed; EMA mood and coping
 
 This repo is the **canonical owner of the public SDOH instrument definition** — the instrument ids, question prompts, domains, and scale. Helm Evidence `corpus.project` is the only supported writer for [`data/instruments-export.json`](./data/instruments-export.json). Every downstream copy syncs the exact artifact from a verified Helm Evidence run and binds its `givecare.artifact-ref/v1`.
 
-Project a source change with Helm Evidence:
+Project a source change:
 
 ```bash
-helm evidence driver check --driver evidence-driver.json
-helm evidence plan --driver evidence-driver.json --operation corpus.project \
+hound driver check --driver evidence-driver.json
+hound plan --driver evidence-driver.json --operation corpus.project \
   --json '{"schema_version":"gc-tools.hound.project.input.v1"}' \
   --as-of YYYY-MM-DD --output /tmp/gc-tools-project.json
-helm evidence execute --driver evidence-driver.json --plan /tmp/gc-tools-project.json
-# Run `helm evidence verify <run_dir>` with the run directory from execute.
+hound execute --driver evidence-driver.json --plan /tmp/gc-tools-project.json
+# Run `hound verify <run_dir>` with the run directory from execute.
 ```
 
 Helm Evidence binds the source repository, exact output bytes, final file mode, and

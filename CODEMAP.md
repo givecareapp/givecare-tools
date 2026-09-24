@@ -38,7 +38,8 @@ logic. It is not a mirror of the production `care-domain` package.
 
 ```text
 Instrument responses (0-4 deficit scale)
-  -> scoreInstrument() -> subscores per domain
+  -> scoreInstrument() [requires a complete, finite answer set; throws
+     naming missing question ids otherwise] -> subscores per domain
   -> mapInstrumentToDomains() -> normalized 0-1 domain data points
   -> mergeDomainData() -> combined structural data
   -> computeDomainScores() -> domain scores 0-100

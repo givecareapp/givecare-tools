@@ -388,19 +388,38 @@ export function listInstruments(): AssessmentInstrument[] {
   return [SDOH6, EMA3, SDOH30]
 }
 
+/**
+ * Score a complete answer set for one instrument.
+ *
+ * Requires a finite answer for every question. A risk band computed from a
+ * partial answer set understates deficit (missing items would otherwise
+ * count as 0), so this throws rather than silently scoring an incomplete
+ * run. Progressive/partial GC-SDOH-30 administration has its own path —
+ * `mapSdoh30ToDomains` in `../scoring/givecareScore.ts` — which aggregates
+ * only the domains with answered items instead of computing an instrument
+ * total.
+ */
 export function scoreInstrument(
   instrument: InstrumentName,
   version: string,
   answers: Record<string, number>
 ): AssessmentScore {
   const definition = getInstrument(instrument, version)
+  const missing = definition.questions
+    .filter(question => !Number.isFinite(answers[question.id]))
+    .map(question => question.id)
+  if (missing.length > 0) {
+    throw new Error(
+      `scoreInstrument: incomplete answer set for ${instrument}/${version}, missing: ${missing.join(', ')}`
+    )
+  }
+
   const subscores: Record<string, number> = {}
   let total = 0
   let maxScore = 0
 
   for (const question of definition.questions) {
-    const raw = answers[question.id]
-    const value = clamp(Number.isFinite(raw) ? raw : 0, question.min, question.max)
+    const value = clamp(answers[question.id], question.min, question.max)
     total += value
     maxScore += question.max
     subscores[question.domain] = (subscores[question.domain] ?? 0) + value
