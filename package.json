@@ -76,6 +76,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "ci": "npm run typecheck && vitest run",
+    "project:instruments": "tsx scripts/project-instruments.ts",
     "prepublishOnly": "npm run ci && npm run build"
   },
   "devDependencies": {

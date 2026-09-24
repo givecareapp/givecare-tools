@@ -4,9 +4,9 @@ import { describe, it, expect } from 'vitest'
 import { buildInstrumentExport } from '../assessments/instrumentExport.js'
 
 // The committed snapshot `data/instruments-export.json` is the canonical shared
-// instrument artifact. Consumers sync its verified ArtifactRef. Hound
-// `corpus.project` regenerates it. `npm run ci` then rejects source changes that
-// were not projected.
+// instrument artifact. Consumers sync its verified ArtifactRef.
+// `scripts/project-instruments.ts` regenerates it. `npm run ci` then rejects
+// source changes that were not projected.
 const SNAPSHOT_PATH = join(process.cwd(), 'data/instruments-export.json')
 
 function serialize(): string {
@@ -14,7 +14,7 @@ function serialize(): string {
 }
 
 describe('instruments export snapshot', () => {
-  it('data/instruments-export.json matches source (run Helm Evidence corpus.project if this fails)', () => {
+  it('data/instruments-export.json matches source (run npm run project:instruments if this fails)', () => {
     expect(readFileSync(SNAPSHOT_PATH, 'utf8')).toBe(serialize())
   })
 
