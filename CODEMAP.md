@@ -33,4 +33,4 @@ CHANGELOG.md                      release notes
 ```
 
 Subpath exports (`@givecare/tools/...`): `assessments`, `scoring`, `sms`,
-`sms/regulatory`, `sms/quiet-hours`, `geo`, `geo/timezone`, `geo/zip-to-state`.
+`sms/regulatory`, `sms/quietHours`, `geo`, `geo/timezone`, `geo/zipToState`.

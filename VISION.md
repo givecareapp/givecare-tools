@@ -1,5 +1,7 @@
 # gc-tools Vision
 
+Type: explanation.
+
 `gc-tools` is GiveCare's public TypeScript toolkit for assessment, scoring, SMS
 regulatory behavior, quiet hours, and location helpers.
 
