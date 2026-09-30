@@ -68,3 +68,7 @@ Run `npm run ci` and `npm run build` before handoff. Report only checks that ran
 - New domain: extend `GCDomainCode` and `GC_DOMAINS`, then weights, labels, mappings,
   and `GC-SDOH.md`.
 - `scoreInstrument()` throws on an incomplete answer set, naming missing question ids.
+
+## Pointers
+
+- Workspace map: `python3 /home/deploy/repos/givecare/scripts/givecare_protocol.py map`
