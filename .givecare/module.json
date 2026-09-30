@@ -151,6 +151,19 @@
           "emits": [
             "@givecare/tools.Spike"
           ]
+        },
+        {
+          "name": "tools.package.publish",
+          "effect": "read",
+          "gate": "none",
+          "adapter": {
+            "kind": "package",
+            "ref": "package.json"
+          },
+          "accepts": [],
+          "emits": [
+            "@givecare/tools.package/v1"
+          ]
         }
       ]
     },
