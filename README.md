@@ -1,6 +1,6 @@
-<!-- Diátaxis: reference -->
-
 # GiveCare Tools
+
+Type: reference.
 
 > Open-source caregiver social-determinants assessment and scoring toolkit
 
