@@ -12,3 +12,9 @@ state/
 node_modules/
 dist/
 *.tmp
+
+# Environment
+.env
+.env.*
+!.env.example
+!.env.*.example

@@ -75,7 +75,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "ci": "npm run typecheck && vitest run",
+    "check": "npm run typecheck && vitest run",
+    "ci": "npm run check",
     "project:instruments": "tsx scripts/project-instruments.ts",
     "prepublishOnly": "npm run ci && npm run build"
   },

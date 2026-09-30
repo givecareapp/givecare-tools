@@ -21,9 +21,9 @@ workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
 ## Commands
 
 ```bash
+npm run check                 # typecheck + tests, offline (`ci` is an alias)
 npm run typecheck
 npm test
-npm run ci                    # standard gate: typecheck + tests
 npm run build
 npm run project:instruments   # regenerate data/instruments-export.json
 ```
