@@ -44,8 +44,8 @@ npm run project:instruments
 The script builds the export from `src/assessments/instrumentExport.ts`,
 writes it atomically, and prints the final SHA-256. Inspect the diff, then
 commit the projection on `main`. Downstream consumers request that exact
-commit through the workspace `projection-ref` command (capability
-`methods.assessment.project`) and verify the committed bytes. They never
+commit through the workspace `projection-ref` command and verify the
+committed bytes. They never
 invoke the builder or write the projection themselves.
 
 ## Scoring model

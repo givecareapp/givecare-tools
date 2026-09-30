@@ -16,7 +16,7 @@ workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
 - `src/sms/`, `src/geo/`, `src/lib/time.ts`: SMS rules, quiet hours, area code and ZIP lookups.
 - `src/__tests__/`: vitest suites, one per module.
 - `scripts/project-instruments.ts` -> `data/instruments-export.json`: the committed projection.
-- `GC-SDOH.md`: public instrument specification. `.givecare/module.json`: module declaration.
+- `GC-SDOH.md`: public instrument specification. `.givecare/module.json`: what this repo produces and consumes.
 
 ## Commands
 
@@ -39,8 +39,8 @@ npm run project:instruments   # regenerate data/instruments-export.json
 
 Change the TypeScript owner first, run `npm run project:instruments`, inspect the
 diff, and commit the projection on `main`. Consumers (`gc-evals`) request the exact
-commit through the workspace `projection-ref` command (capability
-`methods.assessment.project`) and verify the committed bytes.
+commit through the workspace `projection-ref` command and verify the
+committed bytes.
 
 ## Proof
 
