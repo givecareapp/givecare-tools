@@ -16,8 +16,6 @@ GiveCare Tools provides a small, public-safe TypeScript SDK for caregiver SDOH s
 |------|----------|-----|
 | **Caregiver SDOH** | GC-SDOH-6, EMA-3, GC-SDOH-30, targeted deep dive | Main open-source contribution |
 | **Scoring** | Six-domain model, composite score, bands, trend/spike helpers | Helps teams operationalize caregiver pressure signals |
-| **Basic SMS utilities** | STOP/START/HELP parsing, quiet-hours helpers | Safe interoperability primitives |
-| **Geo helpers** | ZIP → state, phone area code → timezone | Useful for state/resource routing |
 
 Not included: production benefits data, eligibility filing flows, Mira prompt/runtime, memory, identity, resource orchestration, crisis operations, or clinical decision support.
 
@@ -101,9 +99,6 @@ const deepDiveQuestions = getSdoh30QuestionsForDomains(flagged)
 ```typescript
 import { scoreInstrument } from '@givecare/tools/assessments'
 import { computeGiveCareScore } from '@givecare/tools/scoring'
-import { parseRegulatoryCommand } from '@givecare/tools/sms'
-import { inferTimezoneFromAreaCode, zipToState } from '@givecare/tools/geo'
-import { zipToState as zipToStateOnly } from '@givecare/tools/geo/zip-to-state'
 ```
 
 ## Project structure
@@ -114,10 +109,6 @@ src/
   assessments/instruments.ts     # GC-SDOH-6, EMA-3, GC-SDOH-30 definitions + scoreInstrument()
   assessments/instrumentExport.ts# buildInstrumentExport() — canonical shared snapshot builder
   scoring/givecareScore.ts       # Domain model, composite scoring, trending, spike detection
-  sms/regulatory.ts              # STOP/START/HELP parsing
-  sms/quietHours.ts              # Quiet hours enforcement
-  geo/timezone.ts                # Area code → timezone inference
-  geo/zipToState.ts              # ZIP → US state lookup
   lib/time.ts                    # days() helper
 data/
   instruments-export.json        # Canonical projected instrument snapshot

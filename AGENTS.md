@@ -2,18 +2,17 @@
 
 Type: reference.
 
-This repo owns public TypeScript assessment, scoring, SMS, and geo helpers. Root
+This repo owns public TypeScript assessment and scoring helpers. Root
 workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
 `/home/deploy/wiki/aims/givecare-instruments.md`.
 
 ## Layout
 
-- `src/index.ts`: public barrel. Subpath exports: `assessments`, `scoring`, `sms`
-  (`regulatory`, `quietHours`), `geo` (`timezone`, `zipToState`).
+- `src/index.ts`: public barrel. Subpath exports: `assessments`, `scoring`.
 - `src/assessments/`: instrument definitions and scoring (`instruments.ts`), shared
   export builder (`instrumentExport.ts`).
 - `src/scoring/givecareScore.ts`: composite GiveCare Score.
-- `src/sms/`, `src/geo/`, `src/lib/time.ts`: SMS rules, quiet hours, area code and ZIP lookups.
+- `src/lib/time.ts`: date helper used by scoring.
 - `src/__tests__/`: vitest suites, one per module.
 - `scripts/project-instruments.ts` -> `data/instruments-export.json`: the committed projection.
 - `GC-SDOH.md`: public instrument specification. `.givecare/module.json`: what this repo produces and consumes.
@@ -38,7 +37,7 @@ npm run project:instruments   # regenerate data/instruments-export.json
 ## Required path
 
 Change the TypeScript owner first, run `npm run project:instruments`, inspect the
-diff, and commit the projection on `main`. Consumers (`gc-evals`) request the exact
+diff, and commit the projection on `main`. Consumers (`gc-evals`, `gc-sms`) request the exact
 commit through the workspace `projection-ref` command and verify the
 committed bytes.
 

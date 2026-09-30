@@ -14,7 +14,6 @@
     "social-determinants",
     "assessment",
     "scoring",
-    "sms",
     "givecare"
   ],
   "engines": {
@@ -35,30 +34,6 @@
     "./scoring": {
       "import": "./dist/scoring/givecareScore.js",
       "types": "./dist/scoring/givecareScore.d.ts"
-    },
-    "./sms": {
-      "import": "./dist/sms/index.js",
-      "types": "./dist/sms/index.d.ts"
-    },
-    "./sms/regulatory": {
-      "import": "./dist/sms/regulatory.js",
-      "types": "./dist/sms/regulatory.d.ts"
-    },
-    "./sms/quiet-hours": {
-      "import": "./dist/sms/quietHours.js",
-      "types": "./dist/sms/quietHours.d.ts"
-    },
-    "./geo": {
-      "import": "./dist/geo/index.js",
-      "types": "./dist/geo/index.d.ts"
-    },
-    "./geo/timezone": {
-      "import": "./dist/geo/timezone.js",
-      "types": "./dist/geo/timezone.d.ts"
-    },
-    "./geo/zip-to-state": {
-      "import": "./dist/geo/zipToState.js",
-      "types": "./dist/geo/zipToState.d.ts"
     }
   },
   "files": [

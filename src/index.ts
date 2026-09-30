@@ -1,6 +1,3 @@
 export * from './assessments/instruments.js'
 export * from './scoring/givecareScore.js'
-export * from './sms/index.js'
-export * from './geo/zipToState.js'
-export * from './geo/timezone.js'
 export * from './lib/time.js'

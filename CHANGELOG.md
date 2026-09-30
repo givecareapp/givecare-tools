@@ -6,6 +6,10 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 
 ## [Unreleased]
 
+### Removed
+
+- `sms` and `geo` modules and their subpath exports (no consumers; the package was never published to npm).
+
 ### Changed
 
 - **gc-tools is now the declared canonical owner of the public SDOH instrument

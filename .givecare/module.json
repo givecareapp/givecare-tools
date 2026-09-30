@@ -1,7 +1,7 @@
 {
   "schema_version": "givecare.module/v2",
   "repository": "gc-tools",
-  "owns": "Public TypeScript assessment, scoring, SMS, and geo helpers",
+  "owns": "Public TypeScript assessment and scoring helpers",
   "check": "npm run check",
   "produces": [
     {"id": "@givecare/tools.InstrumentExport", "path": "data/instruments-export.json", "for": ["gc-evals", "gc-sms"]},
