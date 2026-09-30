@@ -3,8 +3,8 @@
 Type: reference.
 
 This repo owns public TypeScript assessment, scoring, SMS, and geo helpers. Root
-workspace `AGENTS.md` rules apply; this file adds local gates. Read `VISION.md`
-before non-trivial work.
+workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
+`/home/deploy/wiki/aims/givecare-instruments.md`.
 
 ## Authority
 
@@ -24,6 +24,7 @@ Run `npm run ci` and `npm run build` before handoff. Report only checks that ran
 
 ## Safety
 
+- Grow the public API only for demonstrated reuse.
 - Keep the package dependency-free, I/O-free, and framework-free.
 - No benefits catalog or eligibility engine, journey state machine, Mira runtime,
   memory, identity, prompts, turn planning, crisis classifier, or clinical decision

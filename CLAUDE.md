@@ -3,7 +3,7 @@
 Type: reference.
 
 Operational guide for the public TypeScript package. Rules: [`AGENTS.md`](AGENTS.md).
-Scope: `VISION.md`. Files and exports: [`CODEMAP.md`](CODEMAP.md). Instrument spec:
+Files and exports: [`CODEMAP.md`](CODEMAP.md). Instrument spec:
 `GC-SDOH.md`.
 
 ## Commands
