@@ -40,8 +40,7 @@
     "dist",
     "LICENSE",
     "README.md",
-    "GC-SDOH.md",
-    "docs"
+    "GC-SDOH.md"
   ],
   "scripts": {
     "prebuild": "rm -rf dist",
