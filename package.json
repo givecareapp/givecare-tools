@@ -1,6 +1,6 @@
 {
   "name": "@givecare/tools",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Open-source caregiver SDOH assessment and scoring toolkit",
   "license": "MIT",
   "author": "Ali Madad <ali@scty.org>",
@@ -38,6 +38,7 @@
   },
   "files": [
     "dist",
+    "!dist/__tests__",
     "LICENSE",
     "README.md",
     "GC-SDOH.md"
@@ -59,5 +60,9 @@
     "tsx": "^4.23.8",
     "typescript": "^5.7.0",
     "vitest": "^4.1.7"
+  },
+  "homepage": "https://github.com/givecareapp/givecare-tools#readme",
+  "bugs": {
+    "url": "https://github.com/givecareapp/givecare-tools/issues"
   }
 }

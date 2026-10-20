@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use GiveCare Tools, please cite it."
+title: "GiveCare Tools: open-source caregiver SDOH assessment and scoring toolkit"
+authors:
+  - family-names: Madad
+    given-names: Ali
+    affiliation: GiveCare
+repository-code: "https://github.com/givecareapp/givecare-tools"
+url: "https://givecareapp.com"
+license: MIT
+version: 4.0.0
+date-released: 2026-10-20
+keywords:
+  - caregiving
+  - social determinants of health
+  - assessment
+  - typescript

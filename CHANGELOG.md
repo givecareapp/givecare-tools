@@ -6,6 +6,15 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-10-20
+
+### Added
+
+- First npm publication of `@givecare/tools`.
+- `CITATION.cff`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`.
+- README opens with a runnable 30-second example.
+- Compiled tests are excluded from the published tarball.
+
 ### Removed
 
 - `sms` and `geo` modules and their subpath exports (no consumers; the package was never published to npm).

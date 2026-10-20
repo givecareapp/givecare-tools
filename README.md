@@ -6,6 +6,23 @@ Type: reference.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+## 30-second example
+
+```typescript
+import { scoreInstrument, computeGiveCareScoreFromInstruments, flaggedDomains } from '@givecare/tools'
+
+const sdoh6 = scoreInstrument('gc_sdoh6', 'v2', {
+  financial: 3, social: 2, health: 1, housing: 0, navigation: 2, burnout: 3,
+})
+const score = computeGiveCareScoreFromInstruments([{ instrument: 'gc_sdoh6', subscores: sdoh6.subscores }])
+
+console.log(score.score)                 // 0-100; higher means more capacity
+console.log(flaggedDomains(score.domains)) // domains below the flag threshold, e.g. ['GC4', 'GC6']
+```
+
+Deterministic, offline, no account. `riskBand` and the composite bands are
+routing groupings, not validated clinical cutoffs; see [GC-SDOH.md](./GC-SDOH.md).
+
 ## Overview
 
 GiveCare Tools provides a small, public-safe TypeScript SDK for caregiver SDOH screening and domain-based scoring. It is intentionally narrower than GiveCare's internal production `care-domain` package: no Mira runtime, no benefits catalog, no filing workflow, and no proprietary turn-planning logic.
@@ -52,13 +69,12 @@ The GiveCare Score is a GC1-GC6 weighted composite. GC-SDOH-6 supplies the struc
 
 ## Install
 
-Not yet published to the npm registry. Install from source:
-
 ```bash
-git clone https://github.com/givecareapp/givecare-tools
-cd givecare-tools
-npm ci && npm run build
+npm install @givecare/tools
 ```
+
+Node 18+. No runtime dependencies, no network, no I/O. To work from source:
+`git clone https://github.com/givecareapp/givecare-tools && cd givecare-tools && npm ci && npm run build`.
 
 ## Usage
 
