@@ -6,6 +6,14 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- TypeScript `7.1.0-beta`, with `tsrs` (`0.18.0-ts7.1.0-dev.20260929`) as the default no-emit checker and tsc retained for builds and as the explicit `GC_TYPECHECKER=tsc` compatibility check. Emitted declarations are unchanged.
+- One gate script, `scripts/check.sh`: `npm run check` (type check, then tests), `npm run check -- changed`, `npm run typecheck`, `npm run typecheck:tsc`. A misspelled or missing checker fails; checker diagnostics are the exit status.
+- Heavy steps take a slot from the GiveCare host-wide pool when run inside the workspace; standalone clones run unthrottled.
+- `tsconfig.json` sets `types: ["node"]`, required by TypeScript 7 for the tests' `node:` imports.
+- Vitest runs only `src/**/*.test.ts`; it previously also ran the compiled copies in `dist/__tests__`.
+
 ## [4.0.0] - 2026-10-20
 
 ### Added

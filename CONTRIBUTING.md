@@ -24,7 +24,8 @@ GC-SDOH-6, GC-SDOH-30 and EMA-3 instrument definitions and the GiveCare Score.
 
 ```bash
 npm ci
-npm run check      # typecheck + tests
+npm run check      # type check (tsrs) + tests
+npm run typecheck:tsc   # the same type check with tsc
 npm run build
 ```
 

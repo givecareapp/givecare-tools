@@ -20,12 +20,23 @@ workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
 ## Commands
 
 ```bash
-npm run check                 # typecheck + tests, offline (`ci` is an alias)
-npm run typecheck
+npm run check                 # the one gate: type check, then every test (`ci` is an alias)
+npm run check -- changed      # after an edit; this suite is small, so it is the full gate
+npm run typecheck             # tsrs (TypeScript 7.1 checker) only
+npm run typecheck:tsc         # the same check with the retained tsc 7.1; GC_TYPECHECKER=tsc selects it for any check, never silently
 npm test
-npm run build
+npm run build                 # tsc emit: dist/ with public declarations
 npm run project:instruments   # regenerate data/instruments-export.json
 ```
+
+Toolchain: TypeScript `7.1.0-beta` and `tsrs` are pinned exactly. tsrs is the
+default no-emit checker; tsc builds and is the explicit compatibility checker.
+A missing or misspelled checker fails; diagnostics are never retried with the
+other checker. `tsconfig.json` lists `types: ["node"]` because TypeScript 7 no
+longer includes `@types/*` automatically and the tests use `node:fs`. Inside
+the GiveCare workspace, heavy steps take a slot from the host-wide pool
+(`../scripts/heavy_slot.py`); a standalone clone runs unthrottled.
+`src/__tests__/checkScript.test.ts` is the regression suite for the gate.
 
 ## Authority
 
@@ -43,7 +54,7 @@ committed bytes.
 
 ## Proof
 
-Run `npm run ci` and `npm run build` before handoff. Report only checks that ran.
+Run `npm run check`, `npm run typecheck:tsc` and `npm run build` before handoff. Report only checks that ran.
 
 ## Safety
 
