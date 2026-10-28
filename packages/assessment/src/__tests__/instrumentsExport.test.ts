@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { buildInstrumentExport } from '../assessments/instrumentExport.js'
 
@@ -7,7 +8,8 @@ import { buildInstrumentExport } from '../assessments/instrumentExport.js'
 // instrument artifact. Consumers sync its verified ArtifactRef.
 // `scripts/project-instruments.ts` regenerates it. `npm run ci` then rejects
 // source changes that were not projected.
-const SNAPSHOT_PATH = join(process.cwd(), 'data/instruments-export.json')
+// The committed projection lives at the collection root, four levels up from this file.
+const SNAPSHOT_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..', 'data', 'instruments-export.json')
 
 function serialize(): string {
   return `${JSON.stringify(buildInstrumentExport(), null, 2)}\n`

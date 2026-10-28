@@ -1,0 +1,14 @@
+{
+  "profile": "BenefitEvidence/v0.1",
+  "subject": { "program_id": "ny/example-respite-grant" },
+  "claims": [
+    {
+      "id": "availability",
+      "kind": "availability",
+      "value": null,
+      "state": "unknown",
+      "checked_at": "2026-10-28",
+      "review_policy": "Re-check the agency page each month until an intake status is published."
+    }
+  ]
+}

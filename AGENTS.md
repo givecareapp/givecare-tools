@@ -8,14 +8,24 @@ workspace `AGENTS.md` rules apply; this file adds local gates. Owner intent:
 
 ## Layout
 
-- `src/index.ts`: public barrel. Subpath exports: `assessments`, `scoring`.
-- `src/assessments/`: instrument definitions and scoring (`instruments.ts`), shared
-  export builder (`instrumentExport.ts`).
-- `src/scoring/givecareScore.ts`: composite GiveCare Score.
-- `src/lib/time.ts`: date helper used by scoring.
-- `src/__tests__/`: vitest suites, one per module.
-- `scripts/project-instruments.ts` -> `data/instruments-export.json`: the committed projection.
-- `GC-SDOH.md`: public instrument specification. `.givecare/module.json`: what this repo produces and consumes.
+The repo is an npm workspace: the GiveCare Tools collection.
+
+- `packages/assessment/` — `@givecare/assessment`: `src/assessments/instruments.ts`
+  (instrument definitions, `scoreInstrument()`), `src/assessments/instrumentExport.ts`
+  (shared export builder), `src/scoring/givecareScore.ts` (composite GiveCare
+  Score), `src/lib/time.ts`, `src/__tests__/`, and `GC-SDOH.md`, the public
+  instrument specification.
+- `packages/benefit-evidence/` — `@givecare/benefit-evidence`: `src/index.ts`
+  (types, dependency-free validator, helpers), `schema/benefit-evidence.schema.json`
+  (the same contract as JSON Schema 2020-12), `examples/`, `src/__tests__/`.
+- `src/` — `@givecare/tools`, the root compatibility package: three relative
+  re-exports of `packages/assessment/src`, compiled self-contained into `dist/`
+  so a Git install needs no published dependency. `src/__tests__/compatibility.test.ts`
+  pins its export surface to the 4.0.0 fixture; `src/__tests__/checkScript.test.ts`
+  is the gate's regression suite.
+- `scripts/project-instruments.ts` -> `data/instruments-export.json`: the committed
+  projection, at the collection root. `.givecare/module.json`: what this repo
+  produces and consumes.
 
 ## Commands
 
@@ -25,7 +35,7 @@ npm run check -- changed      # after an edit; this suite is small, so it is the
 npm run typecheck             # tsrs (TypeScript 7.1 checker) only
 npm run typecheck:tsc         # the same check with the retained tsc 7.1; GC_TYPECHECKER=tsc selects it for any check, never silently
 npm test
-npm run build                 # tsc emit: dist/ with public declarations
+npm run build                 # tsc emit: root compatibility dist/, then every workspace package's dist/
 npm run project:instruments   # regenerate data/instruments-export.json
 ```
 
@@ -36,7 +46,8 @@ other checker. `tsconfig.json` lists `types: ["node"]` because TypeScript 7 no
 longer includes `@types/*` automatically and the tests use `node:fs`. Inside
 the GiveCare workspace, heavy steps take a slot from the host-wide pool
 (`../scripts/heavy_slot.py`); a standalone clone runs unthrottled.
-`src/__tests__/checkScript.test.ts` is the regression suite for the gate.
+`src/__tests__/checkScript.test.ts` is the regression suite for the gate; it
+type-checks the root project and every `packages/*/tsconfig.json`.
 
 ## Authority
 
@@ -58,7 +69,10 @@ Run `npm run check`, `npm run typecheck:tsc` and `npm run build` before handoff.
 
 ## Safety
 
-- Grow the public API only for demonstrated reuse.
+- Grow the public API only for demonstrated reuse. New packages are an owner
+  decision; BenefitEvidence implements the profile drafted in `gc-benefits`.
+- `@givecare/tools` keeps exporting exactly what 4.0.0 exported until a major
+  release says otherwise.
 - Keep the package dependency-free, I/O-free, and framework-free.
 - No benefits catalog or eligibility engine, journey state machine, Mira runtime,
   memory, identity, prompts, turn planning, crisis classifier, or clinical decision
@@ -73,8 +87,9 @@ Run `npm run check`, `npm run typecheck:tsc` and `npm run build` before handoff.
 
 ## Gotchas
 
-- New public instrument: define it in `assessments/instruments.ts`, add its domain
-  mapping in `scoring/givecareScore.ts` and the `mapInstrumentToDomains()` switch.
+- New public instrument: define it in `packages/assessment/src/assessments/instruments.ts`,
+  add its domain mapping in `packages/assessment/src/scoring/givecareScore.ts` and the
+  `mapInstrumentToDomains()` switch, then `npm run project:instruments`.
 - New domain: extend `GCDomainCode` and `GC_DOMAINS`, then weights, labels, mappings,
   and `GC-SDOH.md`.
 - `scoreInstrument()` throws on an incomplete answer set, naming missing question ids.

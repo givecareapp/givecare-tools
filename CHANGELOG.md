@@ -8,6 +8,20 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 
 ### Changed
 
+- The repository is now the GiveCare Tools collection, an npm workspace of two
+  packages. `@givecare/assessment` (1.0.0) holds the GC-SDOH instruments, the
+  GiveCare Score and the specification, moved from `src/` to
+  `packages/assessment/`. `@givecare/benefit-evidence` (0.1.0) is new: types,
+  a JSON Schema, a dependency-free validator, helpers and examples for the
+  BenefitEvidence v0.1 profile.
+- `@givecare/tools` 4.1.0 is the compatibility package: the same three entry
+  points re-export `@givecare/assessment` and are built self-contained, so a
+  Git install needs nothing else. Its export surface is pinned to 4.0.0 by a
+  test. Its `main`/`types` now point into `dist/src/`.
+- `data/instruments-export.json` names its new source path in its note; the
+  bytes changed, so consumers re-sync the exact commit as usual.
+- `scripts/check.sh` type-checks the root project and every workspace package.
+
 - TypeScript `7.1.0-beta`, with `tsrs` (`0.18.0-ts7.1.0-dev.20260929`) as the default no-emit checker and tsc retained for builds and as the explicit `GC_TYPECHECKER=tsc` compatibility check. Emitted declarations are unchanged.
 - One gate script, `scripts/check.sh`: `npm run check` (type check, then tests), `npm run check -- changed`, `npm run typecheck`, `npm run typecheck:tsc`. A misspelled or missing checker fails; checker diagnostics are the exit status.
 - Heavy steps take a slot from the GiveCare host-wide pool when run inside the workspace; standalone clones run unthrottled.

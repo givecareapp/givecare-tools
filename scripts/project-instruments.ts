@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Regenerates data/instruments-export.json from the owner source of truth
- * (src/assessments/instrumentExport.ts). Run this after changing an
+ * (packages/assessment/src/assessments/instrumentExport.ts). Run this after changing an
  * instrument definition, inspect the diff, then commit on `main`.
  *
  * Consumers never run this script. They pin the committed bytes at an exact
@@ -12,7 +12,7 @@ import { closeSync, fchmodSync, fsyncSync, mkdtempSync, openSync, readFileSync, 
 import { createHash } from 'node:crypto'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildInstrumentExport } from '../src/assessments/instrumentExport.js'
+import { buildInstrumentExport } from '../packages/assessment/src/assessments/instrumentExport.js'
 
 const OUTPUT_PATH = 'data/instruments-export.json'
 const OUTPUT_MODE = 0o644

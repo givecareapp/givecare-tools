@@ -117,6 +117,22 @@ describe('exit statuses', () => {
 })
 
 describe('gate shape', () => {
+  it('type-checks every workspace package project, and all of them before failing', () => {
+    mkdirSync(join(root, 'packages', 'a'), { recursive: true })
+    mkdirSync(join(root, 'packages', 'b'), { recursive: true })
+    writeFileSync(join(root, 'packages', 'a', 'tsconfig.json'), '{}\n')
+    writeFileSync(join(root, 'packages', 'b', 'tsconfig.json'), '{}\n')
+    stub(join(bin, 'tsrs'), STUB('tsrs', 'packages/a/tsconfig.json'))
+    const result = run(['typecheck'])
+    expect(result.status).toBe(1)
+    expect(result.calls).toEqual([
+      'tsrs --version',
+      'tsrs --noEmit -p tsconfig.json',
+      'tsrs --noEmit -p packages/a/tsconfig.json',
+      'tsrs --noEmit -p packages/b/tsconfig.json',
+    ])
+  })
+
   it('the full gate is the type check then every test', () => {
     const result = run([])
     expect(result.status).toBe(0)

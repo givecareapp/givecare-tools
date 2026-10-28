@@ -1,11 +1,25 @@
 {
   "schema_version": "givecare.module/v2",
   "repository": "gc-tools",
-  "owns": "Public TypeScript assessment and scoring helpers",
+  "owns": "GiveCare Tools: public TypeScript packages for caregiver assessment (GC-SDOH) and source-backed benefit evidence (BenefitEvidence)",
   "check": "npm run check",
   "produces": [
-    {"id": "@givecare/tools.InstrumentExport", "path": "data/instruments-export.json", "for": ["gc-evals", "gc-sms"]},
-    {"id": "@givecare/tools", "path": "src", "package": "@givecare/tools", "for": ["gc-sms"]}
+    {
+      "id": "@givecare/tools.InstrumentExport",
+      "path": "data/instruments-export.json",
+      "for": [
+        "gc-evals",
+        "gc-sms"
+      ]
+    },
+    {
+      "id": "@givecare/tools",
+      "path": "src",
+      "package": "@givecare/tools",
+      "for": [
+        "gc-sms"
+      ]
+    }
   ],
   "consumes": []
 }

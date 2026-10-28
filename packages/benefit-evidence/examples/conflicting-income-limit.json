@@ -1,0 +1,19 @@
+{
+  "profile": "BenefitEvidence/v0.1",
+  "subject": { "program_id": "ny/example-caregiver-stipend" },
+  "claims": [
+    {
+      "id": "income-limit",
+      "kind": "eligibility",
+      "value": { "note": "Two official pages state different household income limits; neither is withdrawn." },
+      "state": "conflicting",
+      "evidence": [
+        { "url": "https://agency.example/stipend", "excerpt": "Household income at or below 200% of the federal poverty level.", "captured_at": "2026-10-20" },
+        { "url": "https://agency.example/stipend/faq", "excerpt": "Families earning up to 250% of the federal poverty level may apply.", "captured_at": "2026-10-20" }
+      ],
+      "checked_at": "2026-10-28",
+      "review_by": "2026-11-28",
+      "rulespec": "https://example.org/rules/stipend-income"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@givecare/assessment",
+  "version": "1.0.0",
+  "description": "GC-SDOH caregiver assessment instruments and the GiveCare Score: items, scoring, and the open specification",
+  "license": "MIT",
+  "author": "Ali Madad <ali@scty.org>",
+  "repository": { "type": "git", "url": "https://github.com/givecareapp/givecare-tools", "directory": "packages/assessment" },
+  "homepage": "https://github.com/givecareapp/givecare-tools/tree/main/packages/assessment#readme",
+  "bugs": { "url": "https://github.com/givecareapp/givecare-tools/issues" },
+  "keywords": ["sdoh", "caregiver", "social-determinants", "assessment", "scoring", "givecare"],
+  "engines": { "node": ">=18" },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
+    "./assessments": { "import": "./dist/assessments/instruments.js", "types": "./dist/assessments/instruments.d.ts" },
+    "./scoring": { "import": "./dist/scoring/givecareScore.js", "types": "./dist/scoring/givecareScore.d.ts" }
+  },
+  "files": ["dist", "!dist/__tests__", "LICENSE", "README.md", "GC-SDOH.md"],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "test": "vitest run"
+  }
+}

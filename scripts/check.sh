@@ -44,7 +44,14 @@ with_slot() {
 
 typecheck() {
   echo "typecheck: $checker $("$bin/$checker" --version)" >&2
-  with_slot "$bin/$checker" --noEmit -p tsconfig.json
+  # Every project before failing, so one package's error does not hide another's.
+  local failed=0 project
+  shopt -s nullglob
+  for project in tsconfig.json packages/*/tsconfig.json; do
+    with_slot "$bin/$checker" --noEmit -p "$project" || failed=1
+  done
+  shopt -u nullglob
+  return "$failed"
 }
 
 full() {

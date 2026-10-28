@@ -1,0 +1,25 @@
+{
+  "name": "@givecare/benefit-evidence",
+  "version": "0.1.0",
+  "description": "BenefitEvidence v0.1: types, JSON Schema, validation, and examples for source-backed benefit-program claims",
+  "license": "MIT",
+  "author": "Ali Madad <ali@scty.org>",
+  "repository": { "type": "git", "url": "https://github.com/givecareapp/givecare-tools", "directory": "packages/benefit-evidence" },
+  "homepage": "https://github.com/givecareapp/givecare-tools/tree/main/packages/benefit-evidence#readme",
+  "bugs": { "url": "https://github.com/givecareapp/givecare-tools/issues" },
+  "keywords": ["benefits", "evidence", "provenance", "caregiver", "json-schema", "givecare"],
+  "engines": { "node": ">=18" },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
+    "./schema.json": "./schema/benefit-evidence.schema.json"
+  },
+  "files": ["dist", "!dist/__tests__", "schema", "examples", "LICENSE", "README.md"],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "test": "vitest run"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "profile": "BenefitEvidence/v0.1",
+  "subject": { "program_id": "local-stable-id", "common_benefits_program_id": "optional-external-id" },
+  "claims": [
+    {
+      "id": "primary-access",
+      "kind": "access",
+      "value": { "channel": "phone", "phone": "+1-555-010-0100" },
+      "state": "supported",
+      "evidence": [{ "url": "https://agency.example/program", "excerpt": "Call 555-010-0100 to apply." }],
+      "checked_at": "2026-10-28",
+      "review_by": "2027-04-28"
+    }
+  ],
+  "rules": [{ "rulespec": "https://example.org/rules/program-eligibility" }]
+}

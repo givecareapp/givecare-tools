@@ -2,150 +2,65 @@
 
 Type: reference.
 
-> Open-source caregiver social-determinants assessment and scoring toolkit
+> Open-source TypeScript packages for caregiver support: an assessment
+> standard and an evidence profile for benefit facts.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## 30-second example
+| Package | Standard | What it lets you do |
+|---|---|---|
+| [`@givecare/assessment`](./packages/assessment/) | **GC-SDOH** | Score a caregiver's six social-determinant domains with GC-SDOH-6, EMA-3 and the GC-SDOH-30 bank, compute the GiveCare Score, and route to the domain that needs attention. [Specification](./packages/assessment/GC-SDOH.md). |
+| [`@givecare/benefit-evidence`](./packages/benefit-evidence/) | **BenefitEvidence v0.1** | Publish and validate source-backed claims about a benefit program — access routes, availability, eligibility facts — with `unknown`, `conflicting` and `expired` as first-class states. Types, JSON Schema, validator, examples. |
+
+Both are small, deterministic, dependency-free, I/O-free, and MIT licensed.
+GC-SDOH is an assessment standard; BenefitEvidence is not another assessment,
+it is the evidence and provenance profile for benefit facts. What is
+deliberately **not** here: a benefits catalog (that is GiveCare's private
+`gc-benefits`), a rule language (see RuleSpec), or a services standard.
+
+## 30-second examples
 
 ```typescript
-import { scoreInstrument, computeGiveCareScoreFromInstruments, flaggedDomains } from '@givecare/tools'
+import { scoreInstrument, computeGiveCareScoreFromInstruments, flaggedDomains } from '@givecare/assessment'
 
-const sdoh6 = scoreInstrument('gc_sdoh6', 'v2', {
-  financial: 3, social: 2, health: 1, housing: 0, navigation: 2, burnout: 3,
-})
+const sdoh6 = scoreInstrument('gc_sdoh6', 'v2', { financial: 3, social: 2, health: 1, housing: 0, navigation: 2, burnout: 3 })
 const score = computeGiveCareScoreFromInstruments([{ instrument: 'gc_sdoh6', subscores: sdoh6.subscores }])
-
-console.log(score.score)                 // 0-100; higher means more capacity
-console.log(flaggedDomains(score.domains)) // domains below the flag threshold, e.g. ['GC4', 'GC6']
+console.log(score.score, flaggedDomains(score.domains)) // 0-100 (higher = more capacity), e.g. ['GC4', 'GC6']
 ```
-
-Deterministic, offline, no account. `riskBand` and the composite bands are
-routing groupings, not validated clinical cutoffs; see [GC-SDOH.md](./GC-SDOH.md).
-
-## Overview
-
-GiveCare Tools provides a small, public-safe TypeScript SDK for caregiver SDOH screening and domain-based scoring. It is intentionally narrower than GiveCare's internal production `care-domain` package: no Mira runtime, no benefits catalog, no filing workflow, and no proprietary turn-planning logic.
-
-## Public surface
-
-| Area | Included | Why |
-|------|----------|-----|
-| **Caregiver SDOH** | GC-SDOH-6, EMA-3, GC-SDOH-30, targeted deep dive | Main open-source contribution |
-| **Scoring** | Six-domain model, composite score, bands, trend/spike helpers | Helps teams operationalize caregiver pressure signals |
-
-Not included: production benefits data, eligibility filing flows, Mira prompt/runtime, memory, identity, resource orchestration, crisis operations, or clinical decision support.
-
-## Instruments
-
-| Instrument | Questions | Purpose | Time |
-|-----------|-----------|---------|------|
-| **GC-SDOH-6** | 6 (1 per domain) | Baseline and structural remeasurement | ~2 min |
-| **EMA-3** | 3 | Momentary reading (stress/mood/coping) | ~1 min |
-| **GC-SDOH-30** | 30-item bank | Four additional questions in one flagged domain | ~1-2 min |
-
-All use a 0-4 response scale. SDOH items are deficit-framed; EMA mood and coping are positively framed. The six caregiver domains are Social Support (GC1), Physical Health (GC2), Housing & Environment (GC3), Financial Resources (GC4), Navigation (GC5), and Emotional Wellbeing (GC6).
-
-**Documentation:** See [GC-SDOH.md](./GC-SDOH.md) for complete questions, scoring, and implementation details.
-
-This repo is the **canonical owner of the public SDOH instrument definition** — the instrument ids, question prompts, domains, and scale. `scripts/project-instruments.ts` is the only supported writer for [`data/instruments-export.json`](./data/instruments-export.json). Every downstream copy syncs the exact committed artifact and binds its `givecare.artifact-ref/v1`.
-
-Project a source change:
-
-```bash
-npm run project:instruments
-```
-
-The script builds the export from `src/assessments/instrumentExport.ts`,
-writes it atomically, and prints the final SHA-256. Inspect the diff, then
-commit the projection on `main`. Downstream consumers request that exact
-commit through the workspace `projection-ref` command and verify the
-committed bytes. They never
-invoke the builder or write the projection themselves.
-
-## Scoring model
-
-The GiveCare Score is a GC1-GC6 weighted composite. GC-SDOH-6 supplies the structural baseline, a completed targeted GC-SDOH-30 branch refines its matching domain, and EMA-3 updates the current health and emotional-wellbeing domains after that baseline exists. EMA-3 also retains its native reading. Higher values mean more capacity.
-
-## Install
-
-```bash
-npm install @givecare/tools
-```
-
-Node 18+. No runtime dependencies, no network, no I/O. To work from source:
-`git clone https://github.com/givecareapp/givecare-tools && cd givecare-tools && npm ci && npm run build`.
-
-## Usage
 
 ```typescript
-import {
-  scoreInstrument,
-  getInstrument,
-  getSdoh30QuestionsForDomains,
-  computeGiveCareScoreFromInstruments,
-  computeEmaReading,
-  flaggedDomains,
-} from '@givecare/tools'
+import { validateBenefitEvidence } from '@givecare/benefit-evidence'
 
-// Score GC-SDOH-6
-const sdoh6 = scoreInstrument('gc_sdoh6', 'v2', {
-  financial: 3,
-  social: 2,
-  health: 1,
-  housing: 0,
-  navigation: 2,
-  burnout: 3,
-})
-
-// Compute composite GiveCare Score (0-100; higher means more capacity)
-const composite = computeGiveCareScoreFromInstruments([
-  { instrument: 'gc_sdoh6', subscores: sdoh6.subscores },
-])
-
-const emaReading = computeEmaReading({ stress: 2, mood: 3, coping: 2 })
-
-// Adaptive deep-dive: find flagged domains and get remaining targeted questions
-const flagged = flaggedDomains(composite.domains) // e.g. ['GC4', 'GC6']
-const deepDiveQuestions = getSdoh30QuestionsForDomains(flagged)
+const result = validateBenefitEvidence(document) // { ok: true, profile } | { ok: false, violations: [{ path, message }] }
 ```
 
-## Subpath exports
+Each package README has the full API.
 
-```typescript
-import { scoreInstrument } from '@givecare/tools/assessments'
-import { computeGiveCareScore } from '@givecare/tools/scoring'
+## `@givecare/tools`: the compatibility package
+
+This root package is `@givecare/tools`. It re-exports `@givecare/assessment` on
+the same entry points it always had — `@givecare/tools`,
+`@givecare/tools/assessments`, `@givecare/tools/scoring` — and is built
+self-contained, so a Git or npm install of it needs nothing else. A test pins
+its export surface to what 4.0.0 shipped. New code should import
+`@givecare/assessment` directly.
+
+## Working on the collection
+
+```bash
+npm ci                   # installs and links every workspace package
+npm run check            # the one gate: type check every package, then every test
+npm run typecheck:tsc    # the same type check with tsc instead of tsrs
+npm run build            # builds the compatibility package and every workspace package
 ```
 
-## Project structure
+Instrument definitions are owned by `packages/assessment/src/assessments/instruments.ts`.
+The committed projection `data/instruments-export.json` is written only by
+`scripts/project-instruments.ts` (`npm run project:instruments`); downstream
+copies sync the exact committed bytes.
 
-```text
-src/
-  index.ts                       # Public barrel
-  assessments/instruments.ts     # GC-SDOH-6, EMA-3, GC-SDOH-30 definitions + scoreInstrument()
-  assessments/instrumentExport.ts# buildInstrumentExport() — canonical shared snapshot builder
-  scoring/givecareScore.ts       # Domain model, composite scoring, trending, spike detection
-  lib/time.ts                    # days() helper
-data/
-  instruments-export.json        # Canonical projected instrument snapshot
-scripts/
-  project-instruments.ts          # Regenerates data/instruments-export.json
-```
-
-## Use cases
-
-- **Healthcare organizations** — add caregiver SDOH screening to care coordination
-- **Non-profits** — identify caregiver pressure domains and route support
-- **Research** — study caregiver-specific social determinants patterns
-- **Technology platforms** — build caregiver support workflows without adopting GiveCare infra
-
-## Evidence base
-
-- **PRAPARE** — Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences
-- **AHC Screening Tool** — Accountable Health Communities Health-Related Social Needs Screening
-- **NAM Framework** — National Academy of Medicine Social Determinants of Health recommendations
-
-This toolkit is not a medical device, diagnostic instrument, crisis service, or eligibility determination engine.
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md) and
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Citation
 
@@ -155,7 +70,6 @@ Originally created by Ali Madad (@amadad).
 @misc{madad_givecare_tools_2026,
   author       = {Ali Madad},
   title        = {{GiveCare Tools}: Open-source frameworks for caregiving support and social determinants of health assessment},
-  note         = {GC-SDOH-30 v3.0},
   howpublished = {\url{https://github.com/givecareapp/givecare-tools}},
   year         = {2026}
 }

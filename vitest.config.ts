@@ -1,4 +1,4 @@
 import { defineConfig } from 'vitest/config'
 
-// Only the TypeScript sources. Without this, Vitest also ran the compiled copies in dist/__tests__.
-export default defineConfig({ test: { include: ['src/**/*.test.ts'] } })
+// Every package's TypeScript tests, from the collection root. Compiled copies in dist/ are never run.
+export default defineConfig({ test: { include: ['src/**/*.test.ts', 'packages/*/src/**/*.test.ts'] } })

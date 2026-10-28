@@ -1,12 +1,16 @@
 {
   "name": "@givecare/tools",
-  "version": "4.0.0",
-  "description": "Open-source caregiver SDOH assessment and scoring toolkit",
+  "version": "4.1.0",
+  "description": "GiveCare Tools: compatibility entry for @givecare/assessment (GC-SDOH instruments and the GiveCare Score)",
   "license": "MIT",
   "author": "Ali Madad <ali@scty.org>",
   "repository": {
     "type": "git",
     "url": "https://github.com/givecareapp/givecare-tools"
+  },
+  "homepage": "https://github.com/givecareapp/givecare-tools#readme",
+  "bugs": {
+    "url": "https://github.com/givecareapp/givecare-tools/issues"
   },
   "keywords": [
     "sdoh",
@@ -20,32 +24,34 @@
     "node": ">=18"
   },
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
     },
     "./assessments": {
-      "import": "./dist/assessments/instruments.js",
-      "types": "./dist/assessments/instruments.d.ts"
+      "import": "./dist/src/assessments.js",
+      "types": "./dist/src/assessments.d.ts"
     },
     "./scoring": {
-      "import": "./dist/scoring/givecareScore.js",
-      "types": "./dist/scoring/givecareScore.d.ts"
+      "import": "./dist/src/scoring.js",
+      "types": "./dist/src/scoring.d.ts"
     }
   },
   "files": [
     "dist",
-    "!dist/__tests__",
+    "!dist/**/__tests__",
     "LICENSE",
-    "README.md",
-    "GC-SDOH.md"
+    "README.md"
   ],
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "tsc",
+    "build": "tsc && npm run build --workspaces --if-present",
     "prepare": "tsc",
     "check": "scripts/check.sh",
     "ci": "npm run check",
@@ -62,9 +68,5 @@
     "tsx": "^4.23.8",
     "typescript": "7.1.0-beta",
     "vitest": "^4.1.7"
-  },
-  "homepage": "https://github.com/givecareapp/givecare-tools#readme",
-  "bugs": {
-    "url": "https://github.com/givecareapp/givecare-tools/issues"
   }
 }
