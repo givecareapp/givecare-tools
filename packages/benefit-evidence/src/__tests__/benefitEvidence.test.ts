@@ -164,9 +164,9 @@ describe('JSON Schema stays in step with the TypeScript contract', () => {
   })
 
   it('uses the same portable URI restriction as the TypeScript validator', () => {
-    expect(schema.$defs.source.properties.url.pattern).toBe('^https?://')
-    expect(schema.$defs.commonbenefits_program.properties.uri.pattern).toBe('^https?://')
-    expect(schema.$defs.rulespec.properties.uri.pattern).toBe('^https?://')
+    expect(schema.$defs.source.properties.url.pattern).toBe('^https?://[^\\s/?#]+')
+    expect(schema.$defs.commonbenefits_program.properties.uri.pattern).toBe('^https?://[^\\s/?#]+')
+    expect(schema.$defs.rulespec.properties.uri.pattern).toBe('^https?://[^\\s/?#]+')
   })
 })
 

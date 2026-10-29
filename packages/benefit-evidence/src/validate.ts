@@ -14,18 +14,16 @@ function isNonEmptyString(value: unknown): value is string {
 export function isIsoDate(value: unknown): value is string {
   if (typeof value !== 'string' || !DATE.test(value)) return false
   const [y, m, d] = value.split('-').map(Number)
-  const date = new Date(Date.UTC(y, m - 1, d))
+  const date = new Date(0)
+  date.setUTCFullYear(y, m - 1, d)
   return date.getUTCFullYear() === y && date.getUTCMonth() === m - 1 && date.getUTCDate() === d
 }
 
+/** Same rule as the schema: literal lowercase http(s):// prefix, a non-empty host, no whitespace. */
+const HTTP_URL = /^https?:\/\/[^\s/?#]+/
+
 function isHttpUrl(value: unknown): value is string {
-  if (typeof value !== 'string') return false
-  try {
-    const url = new URL(value)
-    return url.protocol === 'http:' || url.protocol === 'https:'
-  } catch {
-    return false
-  }
+  return typeof value === 'string' && HTTP_URL.test(value) && !/\s/.test(value)
 }
 
 function checkRuleSpec(value: unknown, path: string, out: Violation[]): void {

@@ -36,6 +36,10 @@ const CASES: Case[] = [
   { name: 'non-http source url', doc: (() => { const d = base(); d.claims[0].evidence[0].url = 'urn:source:1'; return d })(), valid: false, schemaDecides: true },
   { name: 'rulespec with wrong format', doc: (() => { const d = base(); d.rules[0].format = 'rulespec/v0'; return d })(), valid: false, schemaDecides: true },
   { name: 'impossible calendar date', doc: (() => { const d = base(); d.claims[0].checked_at = '2026-02-30'; return d })(), valid: false, schemaDecides: true },
+  { name: 'uppercase url scheme', doc: (() => { const d = base(); d.claims[0].evidence[0].url = 'HTTPS://agency.example/path'; return d })(), valid: false, schemaDecides: true },
+  { name: 'url containing a space', doc: (() => { const d = base(); d.claims[0].evidence[0].url = 'https://agency.example/a b'; return d })(), valid: false, schemaDecides: true },
+  { name: 'url with scheme only', doc: (() => { const d = base(); d.claims[0].evidence[0].url = 'https://'; return d })(), valid: false, schemaDecides: true },
+  { name: 'date in year 0099', doc: (() => { const d = base(); d.claims[0].checked_at = '0099-12-31'; delete d.claims[0].review_by; d.claims[0].review_policy = 'Re-check monthly.'; return d })(), valid: true, schemaDecides: true },
   { name: 'duplicate claim ids', doc: (() => { const d = base(); d.claims.push(structuredClone(d.claims[0])); return d })(), valid: false, schemaDecides: false },
   { name: 'review_by earlier than checked_at', doc: (() => { const d = base(); d.claims[0].review_by = '2020-01-01'; return d })(), valid: false, schemaDecides: false },
 ]
