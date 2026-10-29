@@ -15,9 +15,11 @@ The repo is an npm workspace: the GiveCare Tools collection.
   (shared export builder), `src/scoring/givecareScore.ts` (composite GiveCare
   Score), `src/lib/time.ts`, `src/__tests__/`, and `GC-SDOH.md`, the public
   instrument specification.
-- `packages/benefit-evidence/` — `@givecare/benefit-evidence`: `src/index.ts`
-  (types, dependency-free validator, helpers), `schema/benefit-evidence.schema.json`
-  (the same contract as JSON Schema 2020-12), `examples/`, `src/__tests__/`.
+- `packages/benefit-evidence/` — `@givecare/benefit-evidence`: `src/model.ts`
+  (public profile types), `src/validate.ts` (dependency-free validator and
+  helpers), `src/index.ts` (public exports), `SPEC.md` (the public profile),
+  `schema/benefit-evidence.schema.json` (the same contract as JSON Schema
+  2020-12), `examples/`, `src/__tests__/`.
 - `src/` — `@givecare/tools`, the root compatibility package: three relative
   re-exports of `packages/assessment/src`, compiled self-contained into `dist/`
   so a Git install needs no published dependency. `src/__tests__/compatibility.test.ts`
@@ -70,7 +72,8 @@ Run `npm run check`, `npm run typecheck:tsc` and `npm run build` before handoff.
 ## Safety
 
 - Grow the public API only for demonstrated reuse. New packages are an owner
-  decision; BenefitEvidence implements the profile drafted in `gc-benefits`.
+  decision; BenefitEvidence's public profile lives in this package, while
+  `gc-benefits` implements its stronger private admission process.
 - `@givecare/tools` keeps exporting exactly what 4.0.0 exported until a major
   release says otherwise.
 - Keep the package dependency-free, I/O-free, and framework-free.
