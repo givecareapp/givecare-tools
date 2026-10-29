@@ -13,7 +13,11 @@
       ],
       "checked_at": "2026-10-28",
       "review_by": "2026-11-28",
-      "rulespec": "https://example.org/rules/stipend-income"
+      "rulespec": {
+        "uri": "https://example.org/rules/stipend-income",
+        "format": "rulespec/v1",
+        "outputs": ["example:stipend#income-limit"]
+      }
     }
   ]
 }

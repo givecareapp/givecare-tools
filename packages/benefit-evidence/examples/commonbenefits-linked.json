@@ -1,0 +1,21 @@
+{
+  "profile": "BenefitEvidence/v0.1",
+  "subject": {
+    "program_id": "ny/example-energy-assistance",
+    "commonbenefits": {
+      "uri": "https://publisher.example/commonbenefits/programs/4bd4feca-f366-5261-af55-6a5f2d039557",
+      "id": "4bd4feca-f366-5261-af55-6a5f2d039557"
+    }
+  },
+  "claims": [
+    {
+      "id": "application-url",
+      "kind": "access",
+      "value": { "channel": "web", "url": "https://agency.example/apply" },
+      "state": "supported",
+      "evidence": [{ "url": "https://agency.example/program", "excerpt": "Apply online at agency.example/apply.", "captured_at": "2026-10-28" }],
+      "checked_at": "2026-10-28",
+      "review_by": "2026-11-28"
+    }
+  ]
+}

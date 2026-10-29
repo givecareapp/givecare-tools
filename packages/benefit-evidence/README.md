@@ -12,7 +12,9 @@ published state rather than a missing field. It travels alongside directory
 artifacts (such as [CommonBenefits](https://commonbenefits.dev/)) and rule
 artifacts (such as [RuleSpec](https://github.com/TheAxiomFoundation/axiom-rules-engine)).
 It does not decide eligibility or enrollment, model a household, or define a
-rule language. Neither of those projects has endorsed or adopted it.
+rule language. It does not model services or referrals. Neither upstream
+project has endorsed or adopted it. Read the normative [BenefitEvidence
+specification](./SPEC.md).
 
 ## 30-second example
 
@@ -59,9 +61,9 @@ One profile per stable program subject; any number of claims per subject.
 |---|---|---|
 | `profile` | yes | `"BenefitEvidence/v0.1"` |
 | `subject.program_id` | yes | The stable identifier the publisher's directory uses |
-| `subject.common_benefits_program_id` | no | An external directory identifier |
+| `subject.commonbenefits` | no | A CommonBenefits Program URI and optional identifier |
 | `claims[]` | yes | The source-backed claims (below) |
-| `rules[].rulespec` | no | RuleSpec artifacts for the subject |
+| `rules[]` | no | RuleSpec artifact references for the subject |
 
 Each claim:
 
@@ -74,7 +76,7 @@ Each claim:
 | `evidence[]` | for `supported` | Source references: `url` (required), `excerpt`, `captured_at` |
 | `checked_at` | yes | `YYYY-MM-DD` the claim was last checked |
 | `review_by` / `review_policy` | for time-sensitive claims | A review date, or a stated policy |
-| `rulespec` | no | A RuleSpec artifact this claim concerns |
+| `rulespec` | no | A RuleSpec artifact reference this claim concerns |
 
 `unknown`, `conflicting` and `expired` are valid outputs. A publisher must not
 silently convert any of them into a supported value; `unresolvedClaims()`
@@ -86,18 +88,17 @@ JSON, JSON-LD, CSV rows, API responses, or linked records.
 
 ## Examples
 
-[`examples/`](./examples/) ships one conforming document per state that needs
-one: a supported phone access route, an unknown availability, and a
-conflicting income limit with two retained sources. The test suite validates
-every example and checks that the JSON Schema and the TypeScript validator
-state the same required fields, states, and evidence rule.
+[`examples/`](./examples/) ships basic claim-state examples plus illustrative
+CommonBenefits and RuleSpec references. The test suite validates every example
+and checks that the JSON Schema and TypeScript validator state the same required
+fields, states, and evidence rules.
 
 ## Specification
 
-The profile text is maintained as a draft in the GiveCare benefits repository.
-This package is its reference implementation and ships the schema. A future
-profile version should preserve published claim states and stable program
-identifiers or document a migration.
+[`SPEC.md`](./SPEC.md) is the normative profile text. This package is its
+reference implementation and ships the schema. A future profile version should
+preserve published claim states and stable program identifiers or document a
+migration.
 
 ## License
 
