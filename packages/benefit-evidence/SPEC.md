@@ -61,10 +61,20 @@ Unknown, conflicting, and expired claims are valid outputs and must never be sil
 1. `profile: "BenefitEvidence/v0.1"` and a stable `subject.program_id`.
 2. A `kind`, explicit `value`, state, and `checked_at` for every claim.
 3. At least one source reference for every supported claim.
-4. A `review_by` date or `review_policy` for time-sensitive claims.
+4. A `review_by` date or `review_policy` for every claim. Every benefit claim is time-sensitive.
 5. Valid URIs and declared formats for any CommonBenefits or RuleSpec references.
 
 The [JSON Schema](./schema/benefit-evidence.schema.json) and `@givecare/benefit-evidence` validator implement these rules.
+
+## Checks beyond JSON Schema
+
+JSON Schema cannot express every conformance rule. A conforming validator also checks:
+
+- claim `id` values are unique within one profile;
+- `review_by` is not earlier than `checked_at`;
+- every date is a real calendar date (the schema's `format: date` depends on the validator enabling formats).
+
+The TypeScript validator applies all three. A document that passes the schema but fails one of them is not conformant. The package's test suite runs one shared case corpus through both the schema and the validator and names each case where only the semantic check can decide.
 
 ## Out of scope
 

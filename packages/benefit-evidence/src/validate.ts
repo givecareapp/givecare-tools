@@ -63,6 +63,7 @@ function checkClaim(claim: unknown, path: string, seen: Set<string>, out: Violat
     else if (isIsoDate(claim.checked_at) && claim.review_by < claim.checked_at) out.push({ path: `${path}/review_by`, message: 'review_by must not be earlier than checked_at' })
   }
   if ('review_policy' in claim && !isNonEmptyString(claim.review_policy)) out.push({ path: `${path}/review_policy`, message: 'review_policy must be a non-empty string' })
+  if (!('review_by' in claim) && !('review_policy' in claim)) out.push({ path: `${path}/review_by`, message: 'every claim needs a review_by date or a review_policy' })
   if ('rulespec' in claim) checkRuleSpec(claim.rulespec, `${path}/rulespec`, out)
 }
 
@@ -84,6 +85,7 @@ export function validateBenefitEvidence(input: unknown): ValidationResult {
     }
   }
   if (!Array.isArray(input.claims)) out.push({ path: 'claims', message: 'claims must be an array' })
+  else if (input.claims.length === 0) out.push({ path: 'claims', message: 'a profile needs at least one claim' })
   else {
     const seen = new Set<string>()
     input.claims.forEach((claim, i) => checkClaim(claim, `claims/${i}`, seen, out))

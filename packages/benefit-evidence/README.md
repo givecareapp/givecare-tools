@@ -75,7 +75,7 @@ Each claim:
 | `state` | yes | `supported` · `unknown` · `conflicting` · `expired` |
 | `evidence[]` | for `supported` | Source references: `url` (required), `excerpt`, `captured_at` |
 | `checked_at` | yes | `YYYY-MM-DD` the claim was last checked |
-| `review_by` / `review_policy` | for time-sensitive claims | A review date, or a stated policy |
+| `review_by` / `review_policy` | yes, one of them | A review date, or a stated policy |
 | `rulespec` | no | A RuleSpec artifact reference this claim concerns |
 
 `unknown`, `conflicting` and `expired` are valid outputs. A publisher must not
@@ -90,8 +90,9 @@ JSON, JSON-LD, CSV rows, API responses, or linked records.
 
 [`examples/`](./examples/) ships basic claim-state examples plus illustrative
 CommonBenefits and RuleSpec references. The test suite validates every example
-and checks that the JSON Schema and TypeScript validator state the same required
-fields, states, and evidence rules.
+through both the JSON Schema and the TypeScript validator, runs one shared case
+corpus through both, and names the checks only the validator can make (see
+`SPEC.md` § Checks beyond JSON Schema).
 
 ## Specification
 
