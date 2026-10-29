@@ -12,7 +12,7 @@
       "required": ["program_id"],
       "properties": {
         "program_id": { "type": "string", "minLength": 1, "description": "The stable identifier the publisher's directory uses for this program." },
-        "common_benefits_program_id": { "type": "string", "minLength": 1 }
+        "commonbenefits": { "$ref": "#/$defs/commonbenefits_program" }
       }
     },
     "claims": {
@@ -21,11 +21,7 @@
     },
     "rules": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["rulespec"],
-        "properties": { "rulespec": { "type": "string", "format": "uri" } }
-      }
+      "items": { "$ref": "#/$defs/rulespec" }
     }
   },
   "$defs": {
@@ -34,9 +30,26 @@
       "type": "object",
       "required": ["url"],
       "properties": {
-        "url": { "type": "string", "format": "uri" },
+        "url": { "type": "string", "format": "uri", "pattern": "^https?://" },
         "excerpt": { "type": "string" },
         "captured_at": { "$ref": "#/$defs/date" }
+      }
+    },
+    "commonbenefits_program": {
+      "type": "object",
+      "required": ["uri"],
+      "properties": {
+        "uri": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "Canonical URL of a CommonBenefits Program representation." },
+        "id": { "type": "string", "minLength": 1, "description": "Identifier used by that CommonBenefits representation." }
+      }
+    },
+    "rulespec": {
+      "type": "object",
+      "required": ["uri", "format"],
+      "properties": {
+        "uri": { "type": "string", "format": "uri", "pattern": "^https?://" },
+        "format": { "const": "rulespec/v1" },
+        "outputs": { "type": "array", "items": { "type": "string", "minLength": 1 } }
       }
     },
     "claim": {
@@ -51,7 +64,7 @@
         "checked_at": { "$ref": "#/$defs/date" },
         "review_by": { "$ref": "#/$defs/date" },
         "review_policy": { "type": "string", "minLength": 1 },
-        "rulespec": { "type": "string", "format": "uri" }
+        "rulespec": { "$ref": "#/$defs/rulespec" }
       },
       "if": { "properties": { "state": { "const": "supported" } } },
       "then": { "required": ["evidence"], "properties": { "evidence": { "minItems": 1 } } }

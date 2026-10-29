@@ -16,7 +16,11 @@ Both are small, deterministic, dependency-free, I/O-free, and MIT licensed.
 GC-SDOH is an assessment standard; BenefitEvidence is not another assessment,
 it is the evidence and provenance profile for benefit facts. What is
 deliberately **not** here: a benefits catalog (that is GiveCare's private
-`gc-benefits`), a rule language (see RuleSpec), or a services standard.
+`gc-benefits`), a rule language (see
+[RuleSpec](https://github.com/TheAxiomFoundation/axiom-rules-engine)), or a
+services standard. BenefitEvidence can optionally point to a
+[CommonBenefits](https://commonbenefits.dev/) Program representation or a
+RuleSpec artifact; it does not replace either.
 
 ## 30-second examples
 

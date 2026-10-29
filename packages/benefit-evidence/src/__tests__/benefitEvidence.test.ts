@@ -20,8 +20,14 @@ function violationPaths(input: unknown): string[] {
 }
 
 describe('examples', () => {
-  it('ships three examples covering supported, unknown and conflicting states', () => {
-    expect(Object.keys(examples).sort()).toEqual(['conflicting-income-limit.json', 'supported-phone-access.json', 'unknown-availability.json'])
+  it('ships basic and upstream-reference examples', () => {
+    expect(Object.keys(examples).sort()).toEqual([
+      'commonbenefits-linked.json',
+      'conflicting-income-limit.json',
+      'rulespec-linked.json',
+      'supported-phone-access.json',
+      'unknown-availability.json',
+    ])
   })
 
   for (const [name, doc] of Object.entries(examples)) {
@@ -91,11 +97,24 @@ describe('minimum conformance', () => {
     expect(violationPaths(policy)).toContain('claims/0/review_policy')
   })
 
-  it('checks every source url and the rulespec links', () => {
+  it('checks every source url and structured RuleSpec links', () => {
     const doc = supported()
     doc.claims[0].evidence[0].url = 'agency.example/program'
-    doc.rules[0].rulespec = 'not a url'
-    expect(violationPaths(doc)).toEqual(expect.arrayContaining(['claims/0/evidence/0/url', 'rules/0/rulespec']))
+    doc.rules[0].uri = 'not a url'
+    doc.rules[0].format = 'rulespec/v0'
+    expect(violationPaths(doc)).toEqual(expect.arrayContaining(['claims/0/evidence/0/url', 'rules/0/uri', 'rules/0/format']))
+  })
+
+  it('requires portable http(s) references rather than arbitrary URI schemes', () => {
+    const doc = supported()
+    doc.claims[0].evidence[0].url = 'urn:source:example'
+    expect(violationPaths(doc)).toContain('claims/0/evidence/0/url')
+  })
+
+  it('checks optional CommonBenefits program references', () => {
+    const doc = supported()
+    doc.subject.commonbenefits.uri = 'not a url'
+    expect(violationPaths(doc)).toContain('subject/commonbenefits/uri')
   })
 
   it('rejects duplicate claim ids', () => {
@@ -142,6 +161,12 @@ describe('JSON Schema stays in step with the TypeScript contract', () => {
     expect(schema.$defs.claim.if.properties.state.const).toBe('supported')
     expect(schema.$defs.claim.then.required).toEqual(['evidence'])
     expect(schema.$defs.claim.then.properties.evidence.minItems).toBe(1)
+  })
+
+  it('uses the same portable URI restriction as the TypeScript validator', () => {
+    expect(schema.$defs.source.properties.url.pattern).toBe('^https?://')
+    expect(schema.$defs.commonbenefits_program.properties.uri.pattern).toBe('^https?://')
+    expect(schema.$defs.rulespec.properties.uri.pattern).toBe('^https?://')
   })
 })
 

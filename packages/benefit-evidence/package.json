@@ -16,7 +16,7 @@
     ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
     "./schema.json": "./schema/benefit-evidence.schema.json"
   },
-  "files": ["dist", "!dist/__tests__", "schema", "examples", "LICENSE", "README.md"],
+  "files": ["dist", "!dist/__tests__", "schema", "examples", "LICENSE", "README.md", "SPEC.md"],
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc",

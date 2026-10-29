@@ -1,6 +1,12 @@
 {
   "profile": "BenefitEvidence/v0.1",
-  "subject": { "program_id": "local-stable-id", "common_benefits_program_id": "optional-external-id" },
+  "subject": {
+    "program_id": "local-stable-id",
+    "commonbenefits": {
+      "uri": "https://publisher.example/programs/local-stable-id",
+      "id": "optional-external-id"
+    }
+  },
   "claims": [
     {
       "id": "primary-access",
@@ -12,5 +18,5 @@
       "review_by": "2027-04-28"
     }
   ],
-  "rules": [{ "rulespec": "https://example.org/rules/program-eligibility" }]
+  "rules": [{ "uri": "https://example.org/rules/program-eligibility", "format": "rulespec/v1" }]
 }

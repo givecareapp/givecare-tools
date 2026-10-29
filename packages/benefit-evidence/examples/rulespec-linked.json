@@ -1,0 +1,27 @@
+{
+  "profile": "BenefitEvidence/v0.1",
+  "subject": { "program_id": "ny/example-energy-assistance" },
+  "rules": [
+    {
+      "uri": "https://publisher.example/rules/ny/example-energy-assistance.yaml",
+      "format": "rulespec/v1",
+      "outputs": ["ny:example-energy-assistance#eligible"]
+    }
+  ],
+  "claims": [
+    {
+      "id": "income-rule",
+      "kind": "eligibility",
+      "value": "Household income must be within the published limit.",
+      "state": "supported",
+      "rulespec": {
+        "uri": "https://publisher.example/rules/ny/example-energy-assistance.yaml",
+        "format": "rulespec/v1",
+        "outputs": ["ny:example-energy-assistance#eligible"]
+      },
+      "evidence": [{ "url": "https://agency.example/program", "excerpt": "Your household income must be at or below the published limit.", "captured_at": "2026-10-28" }],
+      "checked_at": "2026-10-28",
+      "review_by": "2026-11-28"
+    }
+  ]
+}

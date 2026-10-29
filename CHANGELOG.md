@@ -21,6 +21,9 @@ All notable changes to `@givecare/tools` are documented here. The format follows
 - `data/instruments-export.json` names its new source path in its note; the
   bytes changed, so consumers re-sync the exact commit as usual.
 - `scripts/check.sh` type-checks the root project and every workspace package.
+- BenefitEvidence v0.1 now names its narrow interoperability boundary:
+  optional links to a CommonBenefits Program representation and to declared
+  `rulespec/v1` artifacts. It neither copies nor implements either standard.
 
 - TypeScript `7.1.0-beta`, with `tsrs` (`0.18.0-ts7.1.0-dev.20260929`) as the default no-emit checker and tsc retained for builds and as the explicit `GC_TYPECHECKER=tsc` compatibility check. Emitted declarations are unchanged.
 - One gate script, `scripts/check.sh`: `npm run check` (type check, then tests), `npm run check -- changed`, `npm run typecheck`, `npm run typecheck:tsc`. A misspelled or missing checker fails; checker diagnostics are the exit status.
